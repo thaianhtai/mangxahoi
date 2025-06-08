@@ -2,7 +2,7 @@
 const mongoose = require("mongoose");
 require("dotenv").config();
 
-const connectUrl = process.env.MONGO_URI; // sửa đúng tên biến bạn đang dùng
+const connectUrl = process.env.MONGO_URI;
 
 class Database {
   constructor() {
@@ -15,9 +15,24 @@ class Database {
         useNewUrlParser: true,
         useUnifiedTopology: true,
       })
-      .then(() => console.log("✅ MongoDB connected successfully!"))
+      .then(() => {
+        console.log("✅ Kết nối thành công!");
+
+        // ✅ Import model tại đây để tự động tạo collection
+        require("../models/user.model");
+        require("../models/Comment.Model");
+        require("../models/FriendRequest.Model");
+        require("../models/Livestream.Model");
+        require("../models/Message.Model");
+        require("../models/Notification.Model");
+        require("../models/post.model");
+        require("../models/SearchHistory.Model");
+        require("../models/Story.Model");
+
+        console.log("✅ Đã tạo bảng xong");
+      })
       .catch((err) => {
-        console.error("❌ MongoDB connection failed!", err);
+        console.error("❌ Kết nối thật bại!", err);
       });
   }
 
